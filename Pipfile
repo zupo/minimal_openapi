@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pyramid = "*"
+"pyramid_openapi3" = {git = "https://github.com/niteoweb/pyramid_openapi3.git", editable = true}
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"

@@ -1,0 +1,35 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: Drinks API
+servers:
+  - url: /api/v1
+
+paths:
+
+  /drinks/:
+    get:
+      summary: What did I have to drink tonight?
+      operationId: drink.list
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Drink"
+
+components:
+  schemas:
+
+    Drink:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 10
