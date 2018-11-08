@@ -5,12 +5,21 @@ $ pipenv run python run.py
 $ open http://localhost:8080/api/v1/
 
 
-If you wanna see how a full-fledged OpenApi specification for an actual production application looks like, check out https://app.woocart.com/api/v1/openapi.yaml.
+# Demo
+
+0. Open http://localhost:8080/api/v1/
+1. Get all drinks
+2. Add a drink
+3. POST empty schema
+4. POST bad schema
+5. POST too long name
+6. Bad GET response
 
 
-# Rationale
+EXTRA 1: More validators on https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md.
 
-Why would I want to use this?? TODO
+EXTRA 2: Full-fledged production OpenApi spec on https://app.woocart.com/api/v1/openapi.yaml.
+
 
 
 # TODO

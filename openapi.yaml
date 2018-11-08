@@ -7,19 +7,6 @@ info:
 servers:
   - url: /api/v1
 
-components:
-  schemas:
-
-    Drink:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          minLength: 3
-          maxLength: 10
-
 paths:
 
   /drinks/:
@@ -47,9 +34,36 @@ paths:
             schema:
               $ref: '#/components/schemas/Drink'
       responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
         '200':
           description: A drink that was recorded
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Drink"
+
+components:
+
+  schemas:
+
+    Drink:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 10
+
+  responses:
+
+    BadRequest:
+      description: OpenAPI request/response validation failed
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
