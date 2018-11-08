@@ -1,8 +1,10 @@
 # minimal_openapi
 
+```
 $ pipenv install
 $ pipenv run python run.py
 $ open http://localhost:8080/api/v1/
+```
 
 
 # Demo

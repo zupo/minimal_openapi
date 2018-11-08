@@ -28,7 +28,7 @@ def list(request):
 
 
 @view_config(route_name="drinks", renderer="json", request_method="POST", openapi=True)
-def create(request):
+def record(request):
     drink = Drink(name=request.openapi_validated.body.name)
     DRINKS.append(drink)
     return drink
