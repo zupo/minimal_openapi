@@ -16,7 +16,7 @@ $ open http://localhost:8080/api/v1/
 5. POST too long name
 6. Bad GET response: [{"foo": "bar"}]
 
-EXTRA 1: More validators on https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md.
+EXTRA 1: More validators on https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#properties.
 
 EXTRA 2: Full-fledged production OpenApi spec on https://app.woocart.com/api/v1/openapi.yaml.
 
