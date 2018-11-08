@@ -34,6 +34,19 @@ def create(request):
     return drink
 
 
+if __name__ == "__main__":
+    with Configurator() as config:
+        config.include("pyramid_openapi3")
+        config.pyramid_openapi3_spec("openapi.yaml", route="/api/v1/openapi.yaml")
+        config.pyramid_openapi3_validation_error_view("openapi_validation_error")
+        config.pyramid_openapi3_add_explorer(route="/api/v1/")
+        config.add_route("drinks", "/api/v1/drinks/")
+        config.scan()
+        app = config.make_wsgi_app()
+    server = make_server("0.0.0.0", 8080, app)
+    server.serve_forever()
+
+
 def extract_error(err):
     import pdb
 
@@ -47,16 +60,3 @@ def extract_error(err):
 def openapi_validation_error(context, request):
     errors = [str(err) for err in request.openapi_validated.errors]
     return exception_response(400, json_body=errors)
-
-
-if __name__ == "__main__":
-    with Configurator() as config:
-        config.include("pyramid_openapi3")
-        config.pyramid_openapi3_spec("openapi.yaml", route="/api/v1/openapi.yaml")
-        config.pyramid_openapi3_validation_error_view("openapi_validation_error")
-        config.pyramid_openapi3_add_explorer(route="/api/v1/")
-        config.add_route("drinks", "/api/v1/drinks/")
-        config.scan()
-        app = config.make_wsgi_app()
-    server = make_server("0.0.0.0", 8080, app)
-    server.serve_forever()
