@@ -13,7 +13,7 @@ $ open http://localhost:8080/api/v1/
 3. POST empty schema
 4. POST bad schema
 5. POST too long name
-6. Bad GET response
+6. Bad GET response: [{"foo": "bar"}]
 
 
 EXTRA 1: More validators on https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md.
@@ -25,7 +25,6 @@ EXTRA 2: Full-fledged production OpenApi spec on https://app.woocart.com/api/v1/
 # TODO
 
 
-* Schema for 400: BadRequest
 * Tests
 * Travis
 * mypy coverage
