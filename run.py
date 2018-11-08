@@ -13,10 +13,23 @@ class Drink:
         return {"name": self.name}
 
 
+# fmt: off
+DRINKS = [
+    Drink(name="water"),
+]
+# fmt: on
+
+
 @view_config(route_name="drinks", renderer="json", request_method="GET", openapi=True)
-def list(request) -> type:
-    sake = Drink(name="sake")
-    return [sake]
+def list(request):
+    return DRINKS
+
+
+@view_config(route_name="drinks", renderer="json", request_method="POST", openapi=True)
+def create(request):
+    drink = Drink(name=request.openapi_validated.body.name)
+    DRINKS.append(drink)
+    return drink
 
 
 if __name__ == "__main__":
