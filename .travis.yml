@@ -1,0 +1,19 @@
+language: python
+python:
+- 3.7
+dist: xenial
+env:
+  global:
+  - PIPENV_IGNORE_VIRTUALENVS=1
+
+install:
+- pip install pipenv
+- make install
+
+script:
+- make tests
+
+cache:
+  pip: true
+  directories:
+  - /home/travis/.cache/pipenv

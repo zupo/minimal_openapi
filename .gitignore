@@ -1,1 +1,6 @@
+.coverage
+.installed
+.mypy_cache/
 .venv/
+htmltypecov/
+typecov/

@@ -29,5 +29,3 @@ EXTRA 2: Full-fledged production OpenApi spec on https://app.woocart.com/api/v1/
 * Travis
 * mypy coverage
 * Makefile
-
-
