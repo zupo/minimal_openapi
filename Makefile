@@ -17,7 +17,7 @@ install:
 
 # Run development server
 run: .installed
-	@pipenv run pserve etc/development.ini
+	@pipenv run python run.py
 
 # Testing and linting
 lint: .installed

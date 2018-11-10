@@ -1,4 +1,3 @@
-from pyramid.router import Router
 from run import app
 from webtest import TestApp
 

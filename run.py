@@ -4,8 +4,14 @@ from dataclasses import dataclass
 from openapi_core.schema.exceptions import OpenAPIMappingError
 from pyramid.config import Configurator
 from pyramid.httpexceptions import exception_response
+from pyramid.httpexceptions import HTTPBadRequest
+from pyramid.request import Request
+from pyramid.router import Router
+from pyramid.traversal import DefaultRootFactory
 from pyramid.view import view_config
 from wsgiref.simple_server import make_server
+
+import typing as t
 
 
 @dataclass
@@ -14,7 +20,7 @@ class Item:
 
     title: str
 
-    def __json__(self, request):
+    def __json__(self, request: Request) -> t.Dict["str", "str"]:
         """How should this object look in the JSON response?"""
         return {"title": self.title}
 
@@ -28,13 +34,13 @@ ITEMS = [
 
 
 @view_config(route_name="todo", renderer="json", request_method="GET", openapi=True)
-def get(request):
+def get(request: Request) -> t.List[Item]:
     """The view that serves the list of TODO items for GET requests."""
     return ITEMS
 
 
 @view_config(route_name="todo", renderer="json", request_method="POST", openapi=True)
-def post(request):
+def post(request: Request) -> t.List[t.Dict["str", "str"]]:
     """The view that handles POST requests and creates TODO items."""
     item = Item(title=request.openapi_validated.body.title)
     ITEMS.append(item)
@@ -42,13 +48,15 @@ def post(request):
 
 
 @view_config(name="openapi_validation_error")
-def openapi_validation_error(context, request):
+def openapi_validation_error(
+    context: DefaultRootFactory, request: Request
+) -> HTTPBadRequest:
     """If there are errors when handling the request, return them as response."""
     errors = [str(err) for err in request.openapi_validated.errors]
     return exception_response(400, json_body=errors)
 
 
-def app():
+def app() -> Router:
     """Create the Pyramid WSGI app."""
     with Configurator() as config:
         config.include("pyramid_openapi3")
