@@ -25,7 +25,7 @@ lint: .installed
 
 type: types
 types: .installed
-	# Delete .mypy_cache because mypy report is not generated when cache is fresh https://github.com/python/mypy/issues/5103
+	@# Delete .mypy_cache because mypy report is not generated when cache is fresh https://github.com/python/mypy/issues/5103
 	@rm -rf .mypy_cache
 	@pipenv run mypy run.py
 	@cat ./typecov/linecount.txt
@@ -38,8 +38,9 @@ sort: .installed
 fmt: format
 black: format
 format: .installed sort
-	@pipenv run black run.py
-	@pipenv run black tests.py
+	@pipenv run black --py36 run.py
+	@pipenv run black --py36 tests.py
+	@pipenv run black --py36 .travis/type_coverage_threshold.py
 
 # anything, in regex-speak
 filter = "."
@@ -47,7 +48,7 @@ filter = "."
 args = ""
 
 unit: .installed
-	@pipenv run pytest tests.py --cov-report html --cov-report xml:cov.xml --cov-report term-missing --cov-fail-under=100 --cov=run.py --cov-branch -k $(filter) $(args)
+	@pipenv run pytest tests.py --cov-report html --cov-report xml:cov.xml --cov-report term-missing --cov-fail-under=100 --cov=run --cov-branch -k $(filter) $(args)
 
 test: tests
 tests: format lint types unit

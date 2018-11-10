@@ -20,6 +20,7 @@ class Item:
 
 
 # fmt: off
+# Poor-man's in-memory database. Pre-populated with one TODO item.
 ITEMS = [
     Item(title="Buy milk"),
 ]
@@ -28,17 +29,27 @@ ITEMS = [
 
 @view_config(route_name="todo", renderer="json", request_method="GET", openapi=True)
 def get(request):
+    """The view that serves the list of TODO items for GET requests."""
     return ITEMS
 
 
 @view_config(route_name="todo", renderer="json", request_method="POST", openapi=True)
 def post(request):
+    """The view that handles POST requests and creates TODO items."""
     item = Item(title=request.openapi_validated.body.title)
     ITEMS.append(item)
-    return "Added."
+    return [{"message": "Item added"}]
+
+
+@view_config(name="openapi_validation_error")
+def openapi_validation_error(context, request):
+    """If there are errors when handling the request, return them as response."""
+    errors = [str(err) for err in request.openapi_validated.errors]
+    return exception_response(400, json_body=errors)
 
 
 def app():
+    """Create the Pyramid WSGI app."""
     with Configurator() as config:
         config.include("pyramid_openapi3")
         config.pyramid_openapi3_spec("openapi.yaml", route="/api/v1/openapi.yaml")
@@ -49,19 +60,6 @@ def app():
         return config.make_wsgi_app()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     server = make_server("0.0.0.0", 8080, app())
     server.serve_forever()
-
-
-# TODO: could this be moved to pyramid_openapi3 package?
-def extract_error(err):
-    if isinstance(getattr(err, "original_exception", None), OpenAPIMappingError):
-        return extract_error(err.original_exception)
-    return err.msg
-
-
-@view_config(name="openapi_validation_error")
-def openapi_validation_error(context, request):
-    errors = [str(err) for err in request.openapi_validated.errors]
-    return exception_response(400, json_body=errors)

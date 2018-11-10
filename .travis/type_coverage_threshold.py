@@ -42,7 +42,8 @@ def main(argv=sys.argv) -> None:  # pragma: no cover
         sys.exit(0)
     else:
         sys.stdout.write(
-            f"FAIL Required type coverage of {min_coverage:.0f}% not reached. Total coverage: {coverage:.0f}%\n"
+            f"FAIL Required type coverage of {min_coverage:.0f}% not reached. "
+            f"Total coverage: {coverage:.0f}%\n"
         )
         sys.exit(1)
 

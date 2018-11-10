@@ -2,5 +2,7 @@
 .installed
 .mypy_cache/
 .venv/
+cov.xml
+htmlcov/
 htmltypecov/
 typecov/
