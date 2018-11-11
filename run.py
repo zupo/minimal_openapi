@@ -1,4 +1,4 @@
-"""A very simple API example app showcasing the power of pyramid_openapi3."""
+"""An example RESTful API app showcasing the power of pyramid_openapi3."""
 
 from dataclasses import dataclass
 from openapi_core.schema.exceptions import OpenAPIMappingError
